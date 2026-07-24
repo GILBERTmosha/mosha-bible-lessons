@@ -1,0 +1,414 @@
+<!DOCTYPE html>
+<html lang="sw">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mosha Bible Lessons - Masomo ya Bibilia</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+
+        .container {
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+            max-width: 900px;
+            width: 100%;
+            overflow: hidden;
+        }
+
+        header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 40px 20px;
+            text-align: center;
+        }
+
+        header h1 {
+            font-size: 2.5em;
+            margin-bottom: 10px;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
+        }
+
+        header p {
+            font-size: 1.1em;
+            opacity: 0.95;
+        }
+
+        .content {
+            padding: 40px;
+        }
+
+        .date-display {
+            background: #f8f9fa;
+            padding: 20px;
+            border-radius: 10px;
+            margin-bottom: 30px;
+            text-align: center;
+            border-left: 5px solid #667eea;
+        }
+
+        .date-display h2 {
+            color: #667eea;
+            margin-bottom: 10px;
+            font-size: 1.8em;
+        }
+
+        .date-display p {
+            color: #666;
+            font-size: 1.1em;
+        }
+
+        .lessons-section {
+            margin-bottom: 40px;
+        }
+
+        .lessons-section h3 {
+            color: #667eea;
+            margin-bottom: 20px;
+            font-size: 1.5em;
+            border-bottom: 2px solid #667eea;
+            padding-bottom: 10px;
+        }
+
+        .lesson-card {
+            background: #f8f9fa;
+            border-radius: 10px;
+            padding: 20px;
+            margin-bottom: 20px;
+            border-left: 5px solid #667eea;
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+
+        .lesson-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(102, 126, 234, 0.2);
+        }
+
+        .lesson-card h4 {
+            color: #764ba2;
+            margin-bottom: 10px;
+            font-size: 1.3em;
+        }
+
+        .lesson-card .verse {
+            color: #667eea;
+            font-weight: bold;
+            margin-bottom: 10px;
+            font-style: italic;
+        }
+
+        .lesson-card .content-text {
+            color: #555;
+            line-height: 1.6;
+            margin-bottom: 15px;
+        }
+
+        .lesson-card .daily-word {
+            background: #667eea;
+            color: white;
+            padding: 15px;
+            border-radius: 8px;
+            font-style: italic;
+            margin-top: 15px;
+        }
+
+        .actions {
+            display: flex;
+            gap: 15px;
+            justify-content: center;
+            margin-top: 40px;
+            flex-wrap: wrap;
+        }
+
+        .btn {
+            padding: 12px 30px;
+            border: none;
+            border-radius: 8px;
+            font-size: 1em;
+            cursor: pointer;
+            transition: all 0.3s;
+            text-decoration: none;
+            display: inline-block;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 20px rgba(102, 126, 234, 0.3);
+        }
+
+        .btn-secondary {
+            background: white;
+            color: #667eea;
+            border: 2px solid #667eea;
+        }
+
+        .btn-secondary:hover {
+            background: #667eea;
+            color: white;
+        }
+
+        .btn-admin {
+            background: #ff6b6b;
+            color: white;
+        }
+
+        .btn-admin:hover {
+            background: #ff5252;
+        }
+
+        .loading {
+            text-align: center;
+            padding: 40px;
+            color: #667eea;
+        }
+
+        .error {
+            background: #ffe0e0;
+            color: #c92a2a;
+            padding: 15px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            border-left: 5px solid #c92a2a;
+        }
+
+        .success {
+            background: #d3f9d8;
+            color: #2f9e44;
+            padding: 15px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            border-left: 5px solid #2f9e44;
+        }
+
+        footer {
+            background: #f8f9fa;
+            padding: 20px;
+            text-align: center;
+            color: #666;
+            border-top: 1px solid #ddd;
+        }
+
+        @media (max-width: 768px) {
+            header h1 {
+                font-size: 1.8em;
+            }
+
+            .content {
+                padding: 20px;
+            }
+
+            .actions {
+                flex-direction: column;
+            }
+
+            .btn {
+                width: 100%;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>📖 Mosha Bible Lessons</h1>
+            <p>Neno la Kila Siku kutoka kwenye Bibilia</p>
+        </header>
+
+        <div class="content">
+            <!-- Date Display -->
+            <div class="date-display">
+                <h2 id="todayDate">Ijumaa, Julai 24, 2026</h2>
+                <p>Neno lako la leo</p>
+            </div>
+
+            <!-- Messages -->
+            <div id="messageBox"></div>
+
+            <!-- Today's Lesson -->
+            <div class="lessons-section">
+                <h3>📅 Neno la Kila Siku</h3>
+                <div id="todayLesson" class="loading">
+                    <p>Inapakua neno la leo...</p>
+                </div>
+            </div>
+
+            <!-- All Lessons -->
+            <div class="lessons-section">
+                <h3>📚 Masomo Yote</h3>
+                <div id="lessonsList" class="loading">
+                    <p>Inapakua masomo...</p>
+                </div>
+            </div>
+
+            <!-- Actions -->
+            <div class="actions">
+                <button class="btn btn-primary" onclick="scrollToRegister()">📧 Jisajili kwa Email</button>
+                <a href="/admin.html" class="btn btn-admin">🔐 Admin Panel</a>
+            </div>
+
+            <!-- Registration Section -->
+            <div id="registerSection" style="margin-top: 50px; padding-top: 30px; border-top: 2px solid #eee;">
+                <h3 style="color: #667eea; margin-bottom: 20px;">📧 Jisajili kwa Masomo ya Kila Siku</h3>
+                <form id="registerForm">
+                    <div style="margin-bottom: 15px;">
+                        <input 
+                            type="email" 
+                            id="email" 
+                            placeholder="Ingiza email yako" 
+                            required
+                            style="width: 100%; padding: 12px; border: 2px solid #ddd; border-radius: 8px; font-size: 1em;"
+                        >
+                    </div>
+                    <button type="submit" class="btn btn-primary" style="width: 100%;">
+                        ✅ Jisajili Sasa
+                    </button>
+                </form>
+            </div>
+        </div>
+
+        <footer>
+            <p>🙏 Mungu akubariki! | © 2026 Mosha Bible Lessons</p>
+        </footer>
+    </div>
+
+    <script>
+        // API Base URL
+        const API_URL = 'http://localhost:5000';
+
+        // Format Today's Date
+        function formatTodayDate() {
+            const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
+            const today = new Date();
+            return today.toLocaleDateString('sw-TZ', options);
+        }
+
+        // Get Today's Lesson (based on date)
+        function getTodayLesson(lessons) {
+            const today = new Date();
+            const dayOfYear = Math.floor((today - new Date(today.getFullYear(), 0, 0)) / 86400000);
+            return lessons[dayOfYear % lessons.length];
+        }
+
+        // Load Lessons
+        async function loadLessons() {
+            try {
+                const response = await fetch(`${API_URL}/api/lessons`);
+                const lessons = await response.json();
+
+                if (lessons.length === 0) {
+                    document.getElementById('lessonsList').innerHTML = '<p style="color: #999;">Hakuna masomo bado. Karibu...</p>';
+                    document.getElementById('todayLesson').innerHTML = '<p style="color: #999;">Hakuna masomo bado.</p>';
+                    return;
+                }
+
+                // Display Today's Lesson
+                const todayLesson = getTodayLesson(lessons);
+                displayTodayLesson(todayLesson);
+
+                // Display All Lessons
+                displayAllLessons(lessons);
+
+                // Update Date
+                document.getElementById('todayDate').textContent = formatTodayDate();
+            } catch (error) {
+                console.error('Error loading lessons:', error);
+                document.getElementById('lessonsList').innerHTML = '<p style="color: #c92a2a;">❌ Hitilafu katika kupakua masomo</p>';
+            }
+        }
+
+        // Display Today's Lesson
+        function displayTodayLesson(lesson) {
+            const html = `
+                <div class="lesson-card">
+                    <h4>${lesson.title}</h4>
+                    <div class="verse">📖 ${lesson.bible_verse}</div>
+                    <div class="content-text">${lesson.content}</div>
+                    <div class="daily-word">💭 "${lesson.daily_word}"</div>
+                </div>
+            `;
+            document.getElementById('todayLesson').innerHTML = html;
+        }
+
+        // Display All Lessons
+        function displayAllLessons(lessons) {
+            let html = '';
+            lessons.forEach(lesson => {
+                html += `
+                    <div class="lesson-card">
+                        <h4>${lesson.title}</h4>
+                        <div class="verse">📖 ${lesson.bible_verse}</div>
+                        <div class="content-text">${lesson.content}</div>
+                    </div>
+                `;
+            });
+            document.getElementById('lessonsList').innerHTML = html;
+        }
+
+        // Register User
+        document.getElementById('registerForm').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const email = document.getElementById('email').value;
+
+            try {
+                const response = await fetch(`${API_URL}/api/users/register`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ email })
+                });
+
+                const result = await response.json();
+
+                if (response.ok) {
+                    showMessage('✅ Karibu! Email yako imewekwa. Utapokea masomo ya kila siku! 🎉', 'success');
+                    document.getElementById('registerForm').reset();
+                } else {
+                    showMessage('❌ ' + result.error, 'error');
+                }
+            } catch (error) {
+                console.error('Error:', error);
+                showMessage('❌ Hitilafu: ' + error.message, 'error');
+            }
+        });
+
+        // Show Message
+        function showMessage(text, type) {
+            const messageBox = document.getElementById('messageBox');
+            const className = type === 'success' ? 'success' : 'error';
+            messageBox.innerHTML = `<div class="${className}">${text}</div>`;
+            setTimeout(() => {
+                messageBox.innerHTML = '';
+            }, 5000);
+        }
+
+        // Scroll to Register
+        function scrollToRegister() {
+            document.getElementById('registerSection').scrollIntoView({ behavior: 'smooth' });
+        }
+
+        // Load lessons on page load
+        window.addEventListener('load', loadLessons);
+
+        // Refresh lessons every 60 seconds
+        setInterval(loadLessons, 60000);
+    </script>
+</body>
+</html>
